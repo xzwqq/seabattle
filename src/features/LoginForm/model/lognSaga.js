@@ -1,5 +1,5 @@
 import {call, put, takeLatest} from 'redux-saga/effects'
-import { LoginAction } from './loginSlice'
+import { LoginAction } from './loginSlice.js'
 import {postUser} from '../../../shared/api/loginApi.js'
 
 function* submit(action) {
