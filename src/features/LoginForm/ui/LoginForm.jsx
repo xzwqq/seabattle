@@ -1,14 +1,13 @@
-import './auth.css';
+import './auth.scss';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LoginAction } from '../model/LoginSlice';
+import { LoginAction } from '../model/loginSlice';
 
-const Auth = () => {
+const LoginFrom = () => {
 	const [fio, setFio] = useState('');
 	const [nickname, setNickname] = useState('');
-	const [param, setParam] = useState('http://10.3.18.71:8080');
-	const selector = useSelector((state) => state.login.response);
+	// const selector = useSelector(state => state.login.response);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const formData = {
@@ -25,53 +24,37 @@ const Auth = () => {
 		}
 	};
 
+	// useEffect(() => {
+	// 	console.log(selector);
+	// 	if (!selector){
+	// 		localStorage.setItem('nickname', nickname);
+	// 		navigate('/chat');
+	// 	}
+	// }, [selector, navigate, nickname]);
 
-	useEffect(() => {
-		console.log(selector);
-		if (!selector){
-			localStorage.setItem('nickname', nickname);
-			navigate('/chat');
-		}
-	}, [selector, navigate, nickname]);
-
-	useEffect(() => {
-		localStorage.setItem('BASE_URL', param + '/api/chat');
-	}, [param]);
 
 	return (
 		<>
-			<main>
-				<div className='login-container'>
-					<h2>Вход</h2>
-					<form onSubmit={sendAuth}>
-						<input
-							className='login-input'
-							type='text'
-							required
-							value={param}
-							onChange={e => setParam(e.target.value)}
-						/>
-						<input
-							className='login-input'
-							type='text'
-							placeholder='Имя'
-							required
-							onChange={e => setFio(e.target.value)}
-						/>
-						<input
-							className='password'
-							type='text'
-							placeholder='nickname'
-							required
-							onChange={e => setNickname(e.target.value)}
-						/>
-						<button className='sendLogin' type='submit'>
-							Войти
-						</button>
-					</form>
-				</div>
-			</main>
+			<form onSubmit={sendAuth}>
+				<input
+					className='login-input'
+					type='text'
+					placeholder='Имя'
+					required
+					onChange={e => setFio(e.target.value)}
+				/>
+				<input
+					className='password'
+					type='text'
+					placeholder='nickname'
+					required
+					onChange={e => setNickname(e.target.value)}
+				/>
+				<button className='sendLogin' type='submit'>
+					Войти
+				</button>
+			</form>
 		</>
 	);
 };
-export default Auth;
+export default LoginFrom;

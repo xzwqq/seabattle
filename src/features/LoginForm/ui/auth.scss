@@ -1,0 +1,69 @@
+.sendLogin {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+.sendLogin:hover {
+    border-color: #000000;
+}
+
+main{
+    margin-top: 25vh;
+    display: flex;
+    justify-content: center;
+}
+
+.login-container {
+    background-color: #9605ca;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.login-input, .password {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #666666;
+    color: #FFFFFF;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #666;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+}
+.form-group select{
+    width: 50%;
+    height: 40px;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    color: #666666;
+}
+
+button[type="submit"]:hover {
+    background-color: #ffffff;
+    color: black;
+}

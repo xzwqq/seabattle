@@ -1,6 +1,6 @@
-import { createSLice, createAction } from '@reduxjs/toolkit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 
-const LoginSlice = createSLice({
+const loginSlice = createSlice({
 	name: 'login',
     initialState:{
         response: null,
@@ -16,7 +16,7 @@ const LoginSlice = createSLice({
     }
 });
 export const LoginAction ={
-    ...LoginSlice.action,
-    submitLogin: createAction(`${LoginSlice.name}/submitLogin`)
+    ...loginSlice.actions,
+    submitLogin: createAction(`${loginSlice.name}/submitLogin`)
 }
-export default LoginSlice.reducers
+export default loginSlice.reducer

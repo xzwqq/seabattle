@@ -1,17 +1,18 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import rootSaga from './rootSaga'
-import { LoginSlice } from "../../features/LoginForm";
+import rootSaga from './rootSaga';
+import { loginSlice } from '../../features/LoginForm/index';
 
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 
 const index = configureStore({
-    reducer:{
-        login: LoginSlice,
-    },
+	reducer: {
+		login: loginSlice,
+	},
 
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
-})
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
+});
 
 sagaMiddleware.run(rootSaga);
-export default index
+
+export default index;
