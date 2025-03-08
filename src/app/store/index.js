@@ -9,7 +9,7 @@ const sagaMiddleware = createSagaMiddleware();
 const index = configureStore({
 	reducer: {
 		login: loginSlice,
-        wait: waitSlice
+        wait: waitSlice,
 	},
 
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)

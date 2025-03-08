@@ -5,7 +5,10 @@ const Wait = () => {
 
 
   return (
-    <div>
+    <div className='Wait'>
+        <div className='txt-wait'>
+          <h2>Расставь 5 корбаликов</h2>
+          </div>
         <WaitDesk/>
     </div>
   )

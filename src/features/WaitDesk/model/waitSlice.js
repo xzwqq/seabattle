@@ -2,7 +2,7 @@ import { createSlice, createAction } from "@reduxjs/toolkit";
 const waitSlice = createSlice({
     name:'wait',
     initialState:{
-        ready: null,
+        ready: 0,
         queue: null,
         error: null,
     },

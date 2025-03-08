@@ -2,7 +2,7 @@ import './auth.scss';
 // import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { LoginAction } from '../model/loginSlice';
+import { LoginAction } from '../model/loginSlices';
 
 const LoginFrom = () => {
 	// const selector = useSelector(state => state.login.response);
