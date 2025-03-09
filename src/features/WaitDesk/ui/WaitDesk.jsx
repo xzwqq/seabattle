@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { waitActions } from '../model/waitSlice.js';
+import { waitActions } from '../model/waitSlices.js';
 import './desk.scss';
 
 const WaitDesk = () => {
