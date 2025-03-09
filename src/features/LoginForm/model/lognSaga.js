@@ -13,6 +13,6 @@ function* submit(action) {
 	}
 }
 
-export default function* watchLogin() {
+export function* watchLogin() {
 	yield takeLatest(LoginAction.submitLogin, submit);
 }

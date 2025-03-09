@@ -1,5 +1,5 @@
 import React from 'react'
-import {LoginFrom} from '../../features/LoginForm/index'
+import LoginFrom from '../../features/LoginForm/index'
 
 const Login = () => {
   return (

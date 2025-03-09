@@ -1,5 +1,5 @@
 import React from 'react'
-import { WaitDesk } from '../../features/WaitDEsk'
+import { WaitDesk } from '../../features/WaitDesk'
 
 const Wait = () => {
 
