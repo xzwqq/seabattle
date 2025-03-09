@@ -6,7 +6,7 @@ import './desk.scss';
 const WaitDesk = () => {
 	const countReady = useSelector(state => state.wait.ready);
 	const dispatch = useDispatch();
-    const [message, setMessage] = useState('')
+	const [message, setMessage] = useState('');
 	const [table, setTable] = useState([
 		[0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0],
@@ -39,7 +39,7 @@ const WaitDesk = () => {
 				newCol < table[0].length
 			) {
 				if (table[newRow][newCol] === 1) {
-					setMessage('сюда нельзя')
+					setMessage('сюда нельзя');
 					return false;
 				}
 			}
@@ -48,7 +48,7 @@ const WaitDesk = () => {
 	};
 
 	const handleChange = (rowIndex, cellIndex) => {
-        setMessage('')
+		setMessage('');
 		if (count >= 5) {
 			return setMessage('Максимальное количество кораблей: 5');
 		}
@@ -112,9 +112,9 @@ const WaitDesk = () => {
 			<form onSubmit={handleSubmit}>
 				<button disabled={count < 5}>Готово</button>
 			</form>
-            <div className="message-error">
-                <p>{message}</p>
-            </div>
+			<div className='message-error'>
+				<p>{message}</p>
+			</div>
 		</div>
 	);
 };

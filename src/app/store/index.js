@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
-import { loginSlice } from '../../features/LoginForm';
+import { loginSlices } from '../../features/LoginForm';
 import { waitSlice } from '../../features/WaitDesk';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const index = configureStore({
 	reducer: {
-		login: loginSlice,
+		login: loginSlices,
 		wait: waitSlice
 	},
 
