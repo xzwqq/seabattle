@@ -1,17 +1,15 @@
 import './auth.scss';
-// import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { LoginAction } from '../model/loginSlices';
 
 const LoginFrom = () => {
-	// const selector = useSelector(state => state.login.response);
 	const dispatch = useDispatch();
-	// const navigate = useNavigate();
 	const [formData, setFormData] = useState({
 		fio: '',
 		nickname: ''
 	});
+
 	const handleChange = e => {
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
@@ -26,14 +24,6 @@ const LoginFrom = () => {
 			return alert('нормальный ник сделай еже');
 		}
 	};
-
-	// useEffect(() => {
-	// 	console.log(selector);
-	// 	if (!selector){
-	// 		localStorage.setItem('nickname', nickname);
-	// 		navigate('/chat');
-	// 	}
-	// }, [selector, navigate, nickname]);
 
 	return (
 		<>

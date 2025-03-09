@@ -1,44 +1,42 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { waitActions } from '../model/waitSlices.js';
-import './desk.scss';
+import './waitDesk.scss';
 
 const WaitDesk = () => {
+	const nickname = localStorage.getItem('nickname');
 	const countReady = useSelector(state => state.wait.ready);
 	const dispatch = useDispatch();
 	const [message, setMessage] = useState('');
-	const [table, setTable] = useState([
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 1, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0]
-	]);
 	const [count, setCount] = useState(0);
+	const [formData, setFormData] = useState({
+		nickname: nickname,
+		coordinates: [
+			[0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0]
+		]
+	});
 
-	const isNeighborSafe = (table, rowIndex, cellIndex) => {
+	const isNeighborSafe = (coordinates, rowIndex, cellIndex) => {
 		const directions = [
-			[-1, -1],
-			[-1, 0],
-			[-1, 1],
-			[0, -1],
-			[0, 1],
-			[1, -1],
-			[1, 0],
-			[1, 1]
+			[-1, -1],[-1, 0],[-1, 1],
+			[0, -1],		 [0, 1],
+			[1, -1], [1, 0], [1, 1]
 		];
 
 		for (const [dx, dy] of directions) {
 			const newRow = rowIndex + dx;
 			const newCol = cellIndex + dy;
-
 			if (
 				newRow >= 0 &&
-				newRow < table.length &&
+				newRow < coordinates.length &&
 				newCol >= 0 &&
-				newCol < table[0].length
+				newCol < coordinates[0].length
 			) {
-				if (table[newRow][newCol] === 1) {
+				if (coordinates[newRow][newCol] === 1) {
 					setMessage('сюда нельзя');
 					return false;
 				}
@@ -53,25 +51,25 @@ const WaitDesk = () => {
 			return setMessage('Максимальное количество кораблей: 5');
 		}
 
-		const newTable = [...table];
+		const newTable = [...formData.coordinates];
 		const row = [...newTable[rowIndex]];
 
-		if (row[cellIndex] === 0 && isNeighborSafe(table, rowIndex, cellIndex)) {
+		if (row[cellIndex] === 0 && isNeighborSafe(formData.coordinates, rowIndex, cellIndex)) {
 			row[cellIndex] = 1;
 			newTable[rowIndex] = row;
-			setTable(newTable);
+			setFormData({ ...formData, coordinates: newTable });
 			setCount(count + 1);
 		} else if (row[cellIndex] === 1) {
 			row[cellIndex] = 0;
 			newTable[rowIndex] = row;
-			setTable(newTable);
+			setFormData({ ...formData, coordinates: newTable });
 			setCount(count - 1);
 		}
 	};
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		dispatch(waitActions.submitTable(table));
+		dispatch(waitActions.submitTable(formData));
 	};
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,7 +89,7 @@ const WaitDesk = () => {
 			</div>
 			<div className='desk'>
 				<div className='game-board'>
-					{table.map((row, rowIndex) => (
+					{formData.coordinates.map((row, rowIndex) => (
 						<div key={rowIndex} className='row'>
 							{row.map((item, cellIndex) => {
 								return (
