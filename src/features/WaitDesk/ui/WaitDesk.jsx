@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { waitActions } from '../model/waitSlices.js';
+import { useNavigate } from 'react-router-dom';
 import './waitDesk.scss';
 
 const WaitDesk = () => {
 	const nickname = localStorage.getItem('nickname');
-	const countReady = useSelector(state => state.wait.ready);
+	const countReady = useSelector(state => state.wait.queue);
+	const navigate = useNavigate()
 	const dispatch = useDispatch();
 	const [message, setMessage] = useState('');
 	const [count, setCount] = useState(0);
@@ -71,6 +73,12 @@ const WaitDesk = () => {
 		e.preventDefault();
 		dispatch(waitActions.submitTable(formData));
 	};
+	useEffect(() =>{
+		if(countReady === 3){
+			navigate('/game')
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[countReady])
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const ready = () => {

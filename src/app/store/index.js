@@ -3,13 +3,15 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
 import { loginSlices } from '../../features/LoginForm';
 import { waitSlice } from '../../features/WaitDesk';
+import { gameSlice } from '../../widgets/GameForm';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const index = configureStore({
 	reducer: {
 		login: loginSlices,
-		wait: waitSlice
+		wait: waitSlice,
+		game: gameSlice,
 	},
 
 	middleware: getDefaultMiddleware =>

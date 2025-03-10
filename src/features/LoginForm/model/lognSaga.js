@@ -11,6 +11,11 @@ function* submit(action) {
 		yield call([history, history.push], '/wait');
 	} catch (error) {
 		yield put(LoginAction.setError(error));
+		if(error.status === 403){
+			alert('игра уже запущена')
+		}else if(error.status === 409){
+			alert('игрок с таким ником уже есть')
+		}
 	}
 }
 

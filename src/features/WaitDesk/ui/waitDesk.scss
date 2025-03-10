@@ -20,5 +20,12 @@
 .ship {
     background-color: rgba(0, 128, 255, 0.5);
 }
+.board{
+    display: flex;
+    flex-wrap: wrap;
+}
+.hit {
+    background-color: red;
+}
 
 
