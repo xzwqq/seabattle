@@ -27,5 +27,11 @@
 .hit {
     background-color: red;
 }
-
+.onready{
+    color: #3b9ae1;
+    background-color: #fff;
+    &:disabled{
+        background-color: black;
+    }
+}
 

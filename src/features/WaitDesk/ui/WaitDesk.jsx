@@ -116,7 +116,7 @@ const WaitDesk = () => {
 				</div>
 			</div>
 			<form onSubmit={handleSubmit}>
-				<button disabled={count < 5}>Готово</button>
+				<button className='onready' disabled={count < 5}>Готово</button>
 			</form>
 			<div className='message-error'>
 				<p>{message}</p>

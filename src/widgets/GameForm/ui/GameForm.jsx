@@ -54,14 +54,7 @@ const GameForm = () => {
 												return (
 													<div
 														key={columnIndex}
-														className={
-                                                            item === 1
-                                                              ? 'cell ship' 
-                                                              : item === 3
-                                                              ? 'cell miss' 
-                                                              : 'cell' 
-                                                          }
-														data-text='x'
+														className={item === 1 ? 'cell ship' : item === 3 ? 'cell miss' : 'cell' }
 													>
 														{item === 1 ? 'ship' : item === 3 ? 'miss' : ''}
 													</div>

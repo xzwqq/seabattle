@@ -6,7 +6,7 @@ const gameSlice = createSlice({
     initialState: {
         table: [],
         shoot: [],
-        turn: [],
+        turn: 'isLoading...',
         error: null,
     },
     reducers:{
