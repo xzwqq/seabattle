@@ -33,10 +33,9 @@ const GameForm = () => {
 	};
 
 	useEffect(() => {
-		getTurn();
 		const intervalTable = setTimeout(getTable, 1000);
-		const intervalTurn = setTimeout(getTurn(), 1000);
-		return () => clearInterval(intervalTurn, intervalTable);
+		const intervalTurn = setTimeout(getTurn, 1000);
+		return () => clearInterval( intervalTable, intervalTurn);
 	}, [getTurn, getTable]);
 	return (
 		<div className='page'>
