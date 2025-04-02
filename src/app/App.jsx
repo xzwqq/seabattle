@@ -6,7 +6,7 @@ import Game from '../page/Game/Game.jsx'
 import './style/App.scss'
 
 function App() {
-
+  
   return (
     <HistoryRouter history={history}>
       <Routes>
