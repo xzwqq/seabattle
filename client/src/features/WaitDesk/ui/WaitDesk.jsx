@@ -5,14 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import './waitDesk.scss';
 
 const WaitDesk = () => {
-	const nickname = localStorage.getItem('nickname');
 	const countReady = useSelector(state => state.wait.queue);
 	const navigate = useNavigate()
 	const dispatch = useDispatch();
 	const [message, setMessage] = useState('');
 	const [count, setCount] = useState(0);
 	const [formData, setFormData] = useState({
-		nickname: nickname,
 		coordinates: [
 			[0, 0, 0, 0, 0, 0, 0],
 			[0, 0, 0, 0, 0, 0, 0],
@@ -71,7 +69,8 @@ const WaitDesk = () => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		dispatch(waitActions.submitTable(formData));
+		const {coordinates} = formData
+		dispatch(waitActions.submitTable(coordinates));
 	};
 	useEffect(() =>{
 		if(countReady === 3){
@@ -80,15 +79,9 @@ const WaitDesk = () => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[countReady])
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const ready = () => {
-		dispatch(waitActions.submitReady());
-	};
-
 	useEffect(() => {
-		const interval = setInterval(ready, 1000);
-		return () => clearInterval(interval);
-	}, [ready]);
+		dispatch(waitActions.submitReady());
+	}, []);
 
 	return (
 		<div>

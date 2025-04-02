@@ -1,11 +1,12 @@
 import { createSlice, createAction } from '@reduxjs/toolkit';
+const initialState = {
+	response: null,
+	error: ''
+};
 
 const loginSlices = createSlice({
 	name: 'login',
-	initialState: {
-		response: null,
-		error: null
-	},
+	initialState,
 	reducers: {
 		setResponse: (state, action) => {
 			state.response = action.payload;

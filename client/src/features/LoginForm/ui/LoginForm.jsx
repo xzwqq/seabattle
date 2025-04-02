@@ -5,21 +5,14 @@ import { LoginAction } from '../model/loginSlices';
 
 const LoginFrom = () => {
 	const dispatch = useDispatch();
-	const [formData, setFormData] = useState({
-		fio: '',
-		nickname: ''
-	});
+	const [nickname, setFormData] = useState('');
 
-	const handleChange = e => {
-		const { name, value } = e.target;
-		setFormData({ ...formData, [name]: value });
-	};
+	
 
 	const sendAuth = e => {
 		e.preventDefault();
-		const { nickname } = formData;
 		if (nickname.trim().length > 3 && nickname.trim().length < 16) {
-			dispatch(LoginAction.submitLogin(formData));
+			dispatch(LoginAction.submitLogin(nickname));
 		} else {
 			return alert('нормальный ник сделай еже');
 		}
@@ -29,22 +22,13 @@ const LoginFrom = () => {
 		<>
 			<form onSubmit={sendAuth}>
 				<input
-					className='login-input'
-					type='text'
-					placeholder='Имя'
-					name='fio'
-					required
-					value={formData.fio}
-					onChange={handleChange}
-				/>
-				<input
 					className='password'
 					type='text'
 					placeholder='nickname'
 					name='nickname'
-					value={formData.nickname}
+					value={nickname}
 					required
-					onChange={handleChange}
+					onChange={(e) => setFormData(e.target.value)}
 				/>
 				<button className='sendLogin' type='submit'>
 					Войти

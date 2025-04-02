@@ -1,10 +1,9 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { GameActions } from "./gameSlice";
-import {getTableApi, getTrunApi, postShootApi} from '../../../shared/api/gameApi'
 
 function* getCoordinates(){
     try{
-        const response = yield call(getTableApi)
+        const response = yield call()
         yield put(GameActions.setTable(response))
     }catch(error){
         yield put(GameActions.setError(error))
@@ -13,7 +12,7 @@ function* getCoordinates(){
 
 function* getTurn() {
     try{
-        const response = yield call(getTrunApi)
+        const response = yield call()
         yield put(GameActions.setTurn(response))
     }catch(error){
         yield put(GameActions.setError(error))
@@ -21,7 +20,7 @@ function* getTurn() {
 }
 function* postShoot(action) {
     try{
-        const response = yield call(postShootApi, action.payload)
+        const response = yield call( action.payload)
         yield put(GameActions.setShoot(response))
     }catch(error){
         yield put(GameActions.setError(error))

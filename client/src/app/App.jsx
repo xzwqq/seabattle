@@ -4,7 +4,9 @@ import Login from '../page/Login/Login.jsx'
 import Wait from '../page/Wait/Wait.jsx'
 import Game from '../page/Game/Game.jsx'
 import './style/App.scss'
+import { client } from './socket/socket.js';
 
+  client
 function App() {
   
   return (
