@@ -1,41 +1,87 @@
-.game-board {
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
-}
+.battlefield {
+  display: inline-block;
+  border: 2px solid #333;
+  background-color: #e6f7ff;
+  margin: 10px;
+  font-family: Arial, sans-serif;
 
-.cell {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #fff;
+  .coordinates-header {
+    display: flex;
+    background-color: #f0f0f0;
+    padding: 5px 0;
+  }
+
+  .corner {
+    width: 25px;
+  }
+
+  .coordinate {
+    width: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .battlefield-row {
+    display: flex;
+    align-items: center;
+  }
+
+  .cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.row{
-    display: flex;
-    flex-direction: row;
-}
-
-.ship {
-    background-color: rgba(0, 128, 255, 0.5);
-}
-.board{
-    display: flex;
-    flex-wrap: wrap;
-}
-.hit {
-    background-color: red;
-}
-.onready{
-    color: #3b9ae1;
-    background-color: #fff;
-    &:disabled{
-        background-color: black;
-    }
-}
-.name{
+    cursor: default;
+    background-color: #f0f8ff;
     position: relative;
-    top: 10em;
-}
 
+    &.clickable {
+      cursor: pointer;
+      
+      &:hover {
+        background-color: #d4e6f1;
+      }
+    }
+
+    &.hit {
+      background-color: #ffcccc;
+      color: #d8000c;
+    }
+
+    &.miss {
+      background-color: #e6f7ff;
+      color: #00529b;
+    }
+  }
+
+  &.my-field {
+    .cell {
+      &.hit, &.miss {
+        &::after {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  &.enemy-field {
+    .cell {
+      background-color: #e6f7ff;
+      
+      &.hit::after, &.miss::after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 18px;
+      }
+    }
+  }
+}

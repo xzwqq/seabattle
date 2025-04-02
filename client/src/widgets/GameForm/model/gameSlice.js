@@ -1,33 +1,33 @@
-import { createAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  status: 'connecting', // 'waiting' | 'playing' | 'finished'
+  gameState: null,
+  winner: null,
+  winnerName: '',
+  error: null
+};
 
-const gameSlice = createSlice({
-    name: 'game',
-    initialState: {
-        table: [],
-        shoot: [],
-        turn: 'isLoading...',
-        error: null,
+export const gameSlice = createSlice({
+  name: 'game',
+  initialState,
+  reducers: {
+    updateGameState: (state, action) => {
+      state.gameState = action.payload;
+      state.status = action.payload.gameStarted ? 'playing' : 'waiting';
+      state.error = null;
     },
-    reducers:{
-        setTable: (state, action) =>{
-            state.table = action.payload 
-        },
-        setTurn: (state, action) =>{
-            state.turn = action.payload
-        },
-        setShoot: (state, action) =>{
-            state.shoot = action.payload
-        },
-        setError : (state, action) =>{
-            state.error = action.payload
-        }
-    }
-})
-export const GameActions ={
-    ...gameSlice.actions,
-    submitTable: createAction(`${gameSlice.name}/submitTable`),
-    submitTurn: createAction(`${gameSlice.name}/submitTurn`),
-    submitShoot: createAction(`${gameSlice.name}/submitShoot`),
-}
-export default gameSlice.reducer
+    gameOver: (state, action) => {
+      state.status = 'finished';
+      state.winner = action.payload.winner;
+      state.winnerName = action.payload.winnerName;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+    resetGame: () => initialState
+  }
+});
+
+export const GameActions = gameSlice.actions;
+export default gameSlice.reducer;

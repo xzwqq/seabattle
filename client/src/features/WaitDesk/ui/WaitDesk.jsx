@@ -5,117 +5,110 @@ import { useNavigate } from 'react-router-dom';
 import './waitDesk.scss';
 
 const WaitDesk = () => {
-	const countReady = useSelector(state => state.wait.queue);
-	const navigate = useNavigate()
-	const dispatch = useDispatch();
-	const [message, setMessage] = useState('');
-	const [count, setCount] = useState(0);
-	const [formData, setFormData] = useState({
-		coordinates: [
-			[0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0]
-		]
-	});
+  const countReady = useSelector(state => state.wait.queue);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [message, setMessage] = useState('');
+  const [count, setCount] = useState(0);
+  const [formData, setFormData] = useState({
+    coordinates: Array(5).fill().map(() => Array(7).fill(0))
+  });
 
-	const isNeighborSafe = (coordinates, rowIndex, cellIndex) => {
-		const directions = [
-			[-1, -1],[-1, 0],[-1, 1],
-			[0, -1],		 [0, 1],
-			[1, -1], [1, 0], [1, 1]
-		];
+  const isNeighborSafe = (coordinates, rowIndex, cellIndex) => {
+    const directions = [
+      [-1, -1],[-1, 0],[-1, 1],
+      [0, -1], [0, 1],
+      [1, -1],[1, 0],[1, 1]
+    ];
 
-		for (const [dx, dy] of directions) {
-			const newRow = rowIndex + dx;
-			const newCol = cellIndex + dy;
-			if (
-				newRow >= 0 &&
-				newRow < coordinates.length &&
-				newCol >= 0 &&
-				newCol < coordinates[0].length
-			) {
-				if (coordinates[newRow][newCol] === 1) {
-					setMessage('сюда нельзя');
-					return false;
-				}
-			}
-		}
-		return true;
-	};
+    return directions.every(([dx, dy]) => {
+      const newRow = rowIndex + dx;
+      const newCol = cellIndex + dy;
+      return !(
+        newRow >= 0 &&
+        newRow < coordinates.length &&
+        newCol >= 0 &&
+        newCol < coordinates[0].length &&
+        coordinates[newRow][newCol] === 1
+      );
+    });
+  };
 
-	const handleChange = (rowIndex, cellIndex) => {
-		setMessage('');
-		if (count >= 5) {
-			return setMessage('Максимальное количество кораблей: 5');
-		}
+  const handleCellClick = (rowIndex, cellIndex) => {
+    setMessage('');
+    
+    if (count >= 5) {
+      return setMessage('Максимальное количество кораблей: 5');
+    }
 
-		const newTable = [...formData.coordinates];
-		const row = [...newTable[rowIndex]];
+    const newCoordinates = formData.coordinates.map(row => [...row]);
+    
+    if (newCoordinates[rowIndex][cellIndex] === 0) {
+      if (!isNeighborSafe(newCoordinates, rowIndex, cellIndex)) {
+        return setMessage('Сюда нельзя размещать корабли рядом');
+      }
+      
+      newCoordinates[rowIndex][cellIndex] = 1;
+      setCount(count + 1);
+    } else {
+      newCoordinates[rowIndex][cellIndex] = 0;
+      setCount(count - 1);
+    }
 
-		if (row[cellIndex] === 0 && isNeighborSafe(formData.coordinates, rowIndex, cellIndex)) {
-			row[cellIndex] = 1;
-			newTable[rowIndex] = row;
-			setFormData({ ...formData, coordinates: newTable });
-			setCount(count + 1);
-		} else if (row[cellIndex] === 1) {
-			row[cellIndex] = 0;
-			newTable[rowIndex] = row;
-			setFormData({ ...formData, coordinates: newTable });
-			setCount(count - 1);
-		}
-	};
+    setFormData({ coordinates: newCoordinates });
+  };
 
-	const handleSubmit = e => {
-		e.preventDefault();
-		const {coordinates} = formData
-		dispatch(waitActions.submitTable(coordinates));
-	};
-	useEffect(() =>{
-		if(countReady === 3){
-			navigate('/game')
-		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	},[countReady])
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (count < 5) {
+      return setMessage('Нужно разместить все 5 кораблей');
+    }
+    dispatch(waitActions.submitTable(formData.coordinates));
+  };
 
-	useEffect(() => {
-		dispatch(waitActions.submitReady());
-	}, []);
+  useEffect(() => {
+    if (countReady === 3) {
+      navigate('/game');
+    }
+  }, [countReady, navigate]);
 
-	return (
-		<div>
-			<div className='countReady'>
-				<p>{countReady}/3 игроков готов!</p>
-			</div>
-			<div className='desk'>
-				<div className='game-board'>
-					{formData.coordinates.map((row, rowIndex) => (
-						<div key={rowIndex} className='row'>
-							{row.map((item, cellIndex) => {
-								return (
-									<div
-										key={cellIndex}
-										onClick={() => handleChange(rowIndex, cellIndex)}
-										className={item === 1 ? 'cell ship' : 'cell'}
-										data-text='x'
-									>
-										{item === 1 ? 'ship' : ''}
-									</div>
-								);
-							})}
-						</div>
-					))}
-				</div>
-			</div>
-			<form onSubmit={handleSubmit}>
-				<button className='onready' disabled={count < 5}>Готово</button>
-			</form>
-			<div className='message-error'>
-				<p>{message}</p>
-			</div>
-		</div>
-	);
+  return (
+    <div className="wait-container">
+      <div className='countReady'>
+        <p>{countReady}/3 игроков готовы!</p>
+      </div>
+      
+      <div className='desk'>
+        <div className='game-boards'>
+          {formData.coordinates.map((row, rowIndex) => (
+            <div key={rowIndex} className='row'>
+              {row.map((cell, cellIndex) => (
+                <div
+                  key={cellIndex}
+                  onClick={() => handleCellClick(rowIndex, cellIndex)}
+                  className={`cell ${cell === 1 ? 'ship' : ''}`}
+                >
+                  {cell === 1 ? '■' : ''}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <form onSubmit={handleSubmit}>
+        <button 
+          type="submit" 
+          className='onready' 
+          disabled={count < 5}
+        >
+          Готово ({count}/5)
+        </button>
+      </form>
+      
+      {message && <div className='message-error'>{message}</div>}
+    </div>
+  );
 };
 
 export default WaitDesk;
